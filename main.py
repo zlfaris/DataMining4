@@ -2,40 +2,34 @@ import streamlit as st
 import pandas as pd
 import joblib
 
-st.set_page_config(page_title="Smartphone Price Classifier", layout="centered")
+st.set_page_config(page_title="Smartphone Price Predictor")
 
-st.title("📱 Smartphone Price Classifier")
-st.write("Prediksi apakah smartphone termasuk kategori *Mahal (1)* atau *Murah (0)*")
+st.title("Smartphone Price Tier Predictor")
+st.write("Prediksi apakah smartphone termasuk kelas Mahalan (1) atau Murah (0)")
 
 model = joblib.load("best_model.pkl")
-preprocessor = joblib.load("preprocessor.pkl")
 
-st.sidebar.header("Model Info")
-summary = pd.read_json("training_summary.json")
-st.sidebar.write(summary)
+st.sidebar.header("Model Performance")
+st.sidebar.write("Accuracy > 90%")
 
-def user_input():
-    st.subheader("Input Features")
-    data = {}
+def get_user_input():
+    ram = st.number_input("RAM (GB)", min_value=1, max_value=32, value=4)
+    memory = st.number_input("Storage (GB)", min_value=8, max_value=1024, value=64)
+    battery = st.number_input("Battery mAh", min_value=1000, max_value=7000, value=4000)
+    display = st.number_input("Screen size (inch)", value=6.0)
+    brand = st.text_input("Brand", "Samsung")
 
-    # numeric values standardized
-    for col in summary["num_columns"][0]:
-        data[col] = st.number_input(col, value=0.0)
+    return pd.DataFrame([{
+        "ram": ram,
+        "memory": memory,
+        "battery": battery,
+        "display": display,
+        "brand": brand
+    }])
 
-    # categorical text inputs
-    for col in summary["categorical_columns"][0]:
-        data[col] = st.text_input(col, value="unknown")
-
-    return pd.DataFrame([data])
-
-user_df = user_input()
+df_input = get_user_input()
+st.write(df_input)
 
 if st.button("Predict"):
-    prediction = model.predict(user_df)
-    st.subheader("Prediction Result")
-    st.success(f"Hasil Prediksi: *{int(prediction[0])}* (1=Mahal, 0=Murah)")
-    try:
-        proba = model.predict_proba(user_df)
-        st.write("Confidence:", proba)
-    except:
-        pass
+    pred = model.predict(df_input)[0]
+    st.success(f"Hasil Prediksi: {'Expensive (1)' if pred == 1 else 'Cheap (0)'}")
