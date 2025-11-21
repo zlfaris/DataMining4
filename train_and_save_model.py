@@ -14,7 +14,6 @@ from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier,
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
-# ================= LOAD DATA =================
 df = pd.read_csv("smartphones.csv")
 print("Dataset loaded:", df.shape)
 
@@ -40,7 +39,7 @@ num_pipeline = Pipeline([
 
 cat_pipeline = Pipeline([
     ("imputer", SimpleImputer(strategy='constant', fill_value="missing")),
-    ("onehot", OneHotEncoder(handle_unknown='ignore', sparse=False))
+    ("onehot", OneHotEncoder(handle_unknown='ignore'))
 ])
 
 preprocessor = ColumnTransformer([
