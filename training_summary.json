@@ -1,0 +1,49 @@
+{
+  "accuracy": 0.9336734693877551,
+  "features": [
+    "brand_name",
+    "avg_rating",
+    "5G_or_not",
+    "processor_brand",
+    "num_cores",
+    "processor_speed",
+    "battery_capacity",
+    "fast_charging_available",
+    "fast_charging",
+    "ram_capacity",
+    "internal_memory",
+    "screen_size",
+    "refresh_rate",
+    "num_rear_cameras",
+    "os",
+    "primary_camera_rear",
+    "primary_camera_front",
+    "extended_memory_available",
+    "resolution_height",
+    "resolution_width"
+  ],
+  "num_columns": [
+    "avg_rating",
+    "5G_or_not",
+    "num_cores",
+    "processor_speed",
+    "battery_capacity",
+    "fast_charging_available",
+    "fast_charging",
+    "ram_capacity",
+    "internal_memory",
+    "screen_size",
+    "refresh_rate",
+    "num_rear_cameras",
+    "primary_camera_rear",
+    "primary_camera_front",
+    "extended_memory_available",
+    "resolution_height",
+    "resolution_width"
+  ],
+  "categorical_columns": [
+    "brand_name",
+    "processor_brand",
+    "os"
+  ]
+}
